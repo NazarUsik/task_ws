@@ -1,0 +1,16 @@
+version: "3.3"
+services:
+  backend:
+    build:
+      context: ./task_spring/
+    ports:
+      - 8080:8080
+    container_name: backend
+  database:
+    build: ./task_spring/sql/
+    ports:
+      - 8081:8081
+    command: java -cp ./lib/h2-1.4.200.jar org.h2.tools.RunScript -url jdbc:h2:mem:training -script insert.sql
+  client-test:
+    build:
+      context: ./task_ws_soap_client/
